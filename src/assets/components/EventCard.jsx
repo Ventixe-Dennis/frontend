@@ -7,7 +7,7 @@ function EventCard({event}) {
 
   return (
     <div className="event-card">
-      <div className="card-header"><p>{event.description}</p></div>
+      <div className="card-header"><p>{event.category}</p></div>
       <div className="card-body">
         <NavLink to={`/events/${event.id}`} className="event-name">{event.name}</NavLink>  
         <p className="location"><img src={place} alt="" />{event.location}</p>          

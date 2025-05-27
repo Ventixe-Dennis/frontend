@@ -7,6 +7,8 @@ import Login from './assets/pages/Login'
 import SignUp from './assets/pages/SignUp'
 import EventDetails from './assets/pages/EventDetails'
 import Inbox from './assets/pages/Inbox'
+import Booking from './assets/pages/BookEvent'
+import BookingConfirmed from './assets/pages/BookingConfirmed'
 
 
 function App() {
@@ -17,7 +19,9 @@ function App() {
       <Route element={<PortalLayout />}>
         <Route path="/" element={<Events/> } />
         <Route path="/events/:id" element={<EventDetails/> } />
-        <Route path="/inbox" element={<Inbox/> } />        
+        <Route path="/inbox" element={<Inbox/> } />
+        <Route path="/bookEvent" element={<Booking/>} />    
+        <Route path="/bookingConfirmed/:id" element={<BookingConfirmed/>} />    
 
       </Route>
      
