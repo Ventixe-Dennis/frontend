@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import calendar from '../images/calendar.svg';
-import locationIcon from '../images/Place.svg';
+import EventInfo from '../components/EventInfo'
 
 function BookingConfirmation() {
   const { id } = useParams();
@@ -13,10 +12,10 @@ function BookingConfirmation() {
 
   useEffect(() => {
     const getEvent = async () => {
-      const res = await fetch(`https://localhost:7217/api/events/${id}`);
+      const res = await fetch(`https://dennis-eventservice-ggebbngthpcxd6g2.swedencentral-01.azurewebsites.net/api/events/${id}`);
       if (res.ok) {
         const data = await res.json();
-        setEvent(data);
+        setEvent(data.result);
       }
     };
     getEvent();
@@ -28,28 +27,11 @@ function BookingConfirmation() {
     <div className="details-wrapper">
       <h2>Du har bokat eventet:</h2>
       <p><strong>Namn:</strong> {name}</p>
+
+      <p>Bekräftelse mail har skickats till:</p>
       <p><strong>E-post:</strong> {email}</p>
 
-      <div className="card-header">
-        <p>{event.category}</p>
-      </div>
-
-      <div className="event-header">
-        <h1>{event.name}</h1>
-        <div className="event-details">
-          <div className="info">
-            <p className="location"><img src={calendar} alt="" />{event.date}</p>
-            <p className="location"><img src={locationIcon} alt="" />{event.location}</p>
-          </div>
-          <p className="price">{event.price} kr</p>
-        </div>
-      </div>
-
-      <div className="divider" />
-      <div className="about-event">
-        <h6>About Event</h6>
-        <p>{event.description}</p>
-      </div>
+      <EventInfo event={event} />
     </div>
   );
 }

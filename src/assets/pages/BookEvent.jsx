@@ -5,18 +5,29 @@ function BookEvent() {
   const [events, setEvents] = useState([]);
   const [selectedEventId, setSelectedEventId] = useState('');
   const [selectedEvent, setSelectedEvent] = useState(null);
-
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
     const getEvents = async () => {
-      const res = await fetch('https://localhost:7217/api/events');
-      if (res.ok) {
-        const data = await res.json();
-        setEvents(data);
-      }
+        try {
+            const res = await fetch('https://dennis-eventservice-ggebbngthpcxd6g2.swedencentral-01.azurewebsites.net/api/events');
+            const data = await res.json();
+    
+           
+            if (res.ok && data.success) {
+              setEvents(data.result);
+            } else {
+              throw new Error(data.error || 'Kunde inte hämta events');
+            }
+          } catch (err) {
+            setError(err.message); 
+          } finally {
+            setLoading(false); 
+          }
     };
 
     getEvents();
@@ -42,7 +53,7 @@ function BookEvent() {
       };
     
       try {
-        const res = await fetch('https://localhost:7105/api/bookings', {
+        const res = await fetch('https://dennis-bookingserivce-hqcdhpanfha9cuea.swedencentral-01.azurewebsites.net/api/bookings', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -53,18 +64,21 @@ function BookEvent() {
         if (res.ok) {
             navigate(`/bookingConfirmed/${selectedEventId}`, {
                 state: { name: userName, email: email }
-            });
-        } else {
-          const errorText = await res.text();
-          alert('Booking failed: ' + errorText);
-        }
-      } catch (error) {
-        console.error('Error submitting booking:', error);
-        alert('An error occurred during booking.');
-      }
-      
-        
-  };
+              });
+            } else {
+              const errorText = await res.text();
+              alert('Booking failed: ' + errorText);
+            }
+          } catch (error) {
+            console.error('Error submitting booking:', error);
+            alert('An error occurred during booking.');
+          }
+      };
+
+    
+    if (loading) return <p>Laddar event...</p>;
+    if (error) return <p style={{ color: 'red' }}>{error}</p>;       
+
 
   return (
     <div className="form-wrapper">

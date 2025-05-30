@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { NavLink } from 'react-router-dom';
-import calendar from '../images/calendar.svg'
-import location from '../images/Place.svg'
+import { NavLink } from 'react-router-dom'
+import EventInfo from '../components/EventInfo';
 
 
 function EventDetails() {
@@ -10,11 +9,11 @@ function EventDetails() {
     const [event, setEvent] = useState(null);
 
     const getEvent = async () => {
-      const res = await fetch(`https://localhost:7217/api/events/${id}`);
+      const res = await fetch(`https://dennis-eventservice-ggebbngthpcxd6g2.swedencentral-01.azurewebsites.net/api/events/${id}`);
 
       if (res.ok) {
         const data = await res.json()
-        setEvent(data)
+        setEvent(data.result);
       }
     }
 
@@ -27,26 +26,9 @@ function EventDetails() {
   return (
     <div>
       <div className="details-wrapper">
-        <div className="card-header">        
-          <p>{event.category}</p>        
-        </div>
-        <div className="event-header">
-          <h1>{event.name}</h1>
-          <div className="event-details">
-            <div className="info">
-              <p className="location"><img src={calendar} alt="" />{event.date}</p>
-              <p className="location"><img src={location} alt="" />{event.location}</p>
-            </div>
-              <p className="price">{event.price} kr</p>
-          </div> 
-        </div>
-        <div className="divider" />
-        <div className="about-event">
-          <h6>About Event</h6>
-          <p>{event.description}</p>
-        </div>   
+      <EventInfo event={event} />
   
-      </div>
+       </div>
       <div className="terms-conditions">
         <div className="terms">
             <h5>1. Ticket Purchase and Entry </h5>
