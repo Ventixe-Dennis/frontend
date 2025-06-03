@@ -13,7 +13,7 @@ function EventCard({event}) {
         <p className="location"><img src={place} alt="" />{event.location}</p>          
       </div>
       <div className="card-footer">
-          <p>{event.date}</p>
+          <p>{new Date(event.date).toLocaleDateString('sv-SE')}</p>
           <p className="price">{event.price}kr</p>
       </div>       
     </div>
