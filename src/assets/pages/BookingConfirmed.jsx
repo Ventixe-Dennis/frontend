@@ -25,12 +25,18 @@ function BookingConfirmation() {
 
   return (
     <div className="details-wrapper">
-      <h2>Du har bokat eventet:</h2>
-      <p><strong>Namn:</strong> {name}</p>
-
-      <p>Bekräftelse mail har skickats till:</p>
-      <p><strong>E-post:</strong> {email}</p>
-
+      <div className="booking-box">
+        <div className="confirmed-event">          
+          <h3>Välkommen <strong>{name}</strong>!</h3>
+        </div>
+        
+        <div className="confirmed-info">
+           <p>Bekräftelsemail har skickats till:</p>
+          <p className="booking-email">{email}</p>
+        </div>
+       <h2>Du har bokat eventet:</h2>
+      </div>
+     
       <EventInfo event={event} />
     </div>
   );
